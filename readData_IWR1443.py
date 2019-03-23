@@ -22,12 +22,12 @@ def serialConfig(configFileName):
     # Open the serial ports for the configuration and the data ports
     
     # Raspberry pi
-    #CLIport = serial.Serial('/dev/ttyACM0', 115200)
-    #Dataport = serial.Serial('/dev/ttyACM1', 921600)
+    CLIport = serial.Serial('/dev/ttyACM1', 115200)
+    Dataport = serial.Serial('/dev/ttyACM0', 921600)
     
     # Windows
-    CLIport = serial.Serial('COM3', 115200)
-    Dataport = serial.Serial('COM4', 921600)
+    #CLIport = serial.Serial('COM3', 115200)
+    #Dataport = serial.Serial('COM4', 921600)
 
     # Read the configuration file and send it to the board
     config = [line.rstrip('\r\n') for line in open(configFileName)]
@@ -37,6 +37,9 @@ def serialConfig(configFileName):
         time.sleep(0.01)
         
     return CLIport, Dataport
+
+# ------------------------------------------------------------------
+
 
 # ------------------------------------------------------------------
 
@@ -59,7 +62,7 @@ def parseConfigFile(configFileName):
         if "profileCfg" in splitWords[0]:
             startFreq = int(splitWords[2])
             idleTime = int(splitWords[3])
-            rampEndTime = int(splitWords[5]);
+            rampEndTime = float(splitWords[5]);
             freqSlopeConst = int(splitWords[8]);
             numAdcSamples = int(splitWords[10]);
             numAdcSamplesRoundTo2 = 1;
